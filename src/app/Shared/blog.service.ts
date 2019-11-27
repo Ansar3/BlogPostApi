@@ -37,7 +37,8 @@ export class BlogService {
       );
   }
 
-  saveBlogPost(blogPost: any): Observable<BlogPost> {
+  saveBlogPost(blogPost:BlogPost): Observable<BlogPost> {
+    console.log(JSON.stringify(blogPost))
       return this.http.post<BlogPost>(this.myAppUrl + this.myApiUrl, JSON.stringify(blogPost), this.httpOptions)
       .pipe(
         retry(1),

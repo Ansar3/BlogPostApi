@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder,FormControl } from '@angular/forms';
 })
 export class BlogDetailComponent implements OnInit {
   postList: any = [];
+  post1: any;
   check:boolean=false;
   id:number;
   angForm: FormGroup;
@@ -19,14 +20,16 @@ export class BlogDetailComponent implements OnInit {
   }
   createForm() {
     this.angForm = this.fb.group({
-      id: [''],
-      content: [''],
-      title:['']
+     
+      Title:[''],
+      Content: ['']
+      
     });
   }
 
   ngOnInit() {
     this.postList=this.getAllPost();
+
    
   
   }
@@ -37,28 +40,29 @@ export class BlogDetailComponent implements OnInit {
      
   })
 }
- getBlogPost()
+ getBlogPost(did:number)
  {
-   this.postList;
-   this.id=1;
-    this.services.getBlogPost(this.id).subscribe((data:{})=>
-    {
-      this.postList=data;
+   
+      this.services.getBlogPost(did).subscribe((data:{})=>{
+      this.post1=data;
     })
+    console.log(this.post1)
     this.check=true;
  }
- deleteBlogPostById()
+ deleteBlogPostById(did:number)
  {
-  this.id=1;
-    this.services.deleteBlogPost(2).subscribe((data:{})=>
+  
+    this.services.deleteBlogPost(did).subscribe((data:{})=>
     {
       
     })
-    
+
  }
  insertBlogPost()
  {
+ console.log(this.angForm.value)
   this.services.saveBlogPost(this.angForm.value).subscribe(insertedUser=>{
+    
 
     
   });
@@ -66,5 +70,18 @@ export class BlogDetailComponent implements OnInit {
  onClickSubmit()
  {
    this.insertBlogPost();
+ }
+ updateBlogPost()
+ {
+  
+    
+     this.services.updateBlogPost(this.id,this.angForm.value).subscribe(udatedUser=>{
+
+     })
+ }
+ updateForm()
+ {
+
+    this.updateBlogPost();
  }
 }
